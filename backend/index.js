@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
 
+const { calculatePermissibleBuilding } = require('./middleware/check-permit');
+
 const app = express();
 const PORT = 9000;
 
@@ -28,7 +30,6 @@ app.post('/submit', (req, res) => {
 
   const plotArea = parseFloat(data.plot.area);
   const roadWidth = parseFloat(data.road.width);
-  const buildingArea = parseFloat(data.building.area);
 
   // Determine applicable FSI
   let applicableFSI = 1.1;
@@ -55,9 +56,7 @@ app.post('/submit', (req, res) => {
     permissible_footprint_sqm: permissibleFootprint.toFixed(2)
   };
 
-  // Log results
-  console.log("✅ Permissions Calculated:");
-  console.log(result);
+  console.log("✅ Permissions Calculated:", result);
 
   // Save full data with result to file
   const filePath = path.join(__dirname, 'submissions.json');
