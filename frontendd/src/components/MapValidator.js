@@ -14,13 +14,16 @@ export default function MapValidator() {
   const mapRef = useRef(null);
   const [marker, setMarker] = useState(null);
   const [drawing, setDrawing] = useState(false);
-  const [vertices, setVertices] = useState([]); // array of [lat, lng]
+  const [vertices, setVertices] = useState([]);
   const [areaSqm, setAreaSqm] = useState(null);
   const [roadWidth, setRoadWidth] = useState('');
   const [result, setResult] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [loadingSearch, setLoadingSearch] = useState(false);
+
+  const [currentFloors, setCurrentFloors] = useState('');
+  const [floorStatus, setFloorStatus] = useState(null);
 
   const onMapClick = (latlng) => {
     if (drawing) {
@@ -42,18 +45,15 @@ export default function MapValidator() {
       alert('Need at least 3 points to form a polygon');
       return;
     }
-    // convert to [lng, lat] array for turf
     const coords = vertices.map(([lat, lng]) => [lng, lat]);
-    // close ring if needed
     if (coords[0][0] !== coords[coords.length-1][0] || coords[0][1] !== coords[coords.length-1][1]) {
       coords.push(coords[0]);
     }
     const poly = turf.polygon([coords]);
-    const area = turf.area(poly); // area in square meters
+    const area = turf.area(poly);
     setAreaSqm(area);
     setDrawing(false);
 
-    // fit bounds to polygon
     const map = mapRef.current;
     if (map) {
       const latlngs = vertices.map(v => [v[0], v[1]]);
@@ -67,15 +67,16 @@ export default function MapValidator() {
     setMarker(null);
     setResult(null);
     setDrawing(false);
+    setCurrentFloors('');
+    setFloorStatus(null);
   };
 
-  // Nominatim search (forward geocoding)
+  // Nominatim search
   const doSearch = async (q) => {
     setSearchQuery(q);
     if (!q) { setSearchResults([]); return; }
     setLoadingSearch(true);
     try {
-      // Please respect Nominatim usage policy for production usage
       const url = `https://nominatim.openstreetmap.org/search?format=json&limit=6&q=${encodeURIComponent(q)}&addressdetails=1`;
       const resp = await axios.get(url);
       setSearchResults(resp.data);
@@ -92,12 +93,12 @@ export default function MapValidator() {
     const lon = parseFloat(place.lon);
 
     setMarker({ lat, lng: lon }); 
-    
+
     const map = mapRef.current;
     if (map){
        map.flyTo([lat, lon], 20, { duration: 1.2 });
     }
-    
+
     setSearchResults([]);
     setSearchQuery(place.display_name);
   };
@@ -117,9 +118,22 @@ export default function MapValidator() {
         road: { width: parseFloat(roadWidth) }
       });
       setResult(res.data.result);
+      setFloorStatus(null); // reset floor status when new submission
     } catch (err) {
       console.error('Submit error', err);
       alert('Error submitting to backend. Make sure backend is running and CORS is enabled.');
+    }
+  };
+
+  const checkFloorStatus = () => {
+    if (result && currentFloors) {
+      if (parseInt(currentFloors) > result.max_floors) {
+        setFloorStatus('Illegal Building 🚫');
+      } else {
+        setFloorStatus('Legal Building ✅');
+      }
+    } else {
+      setFloorStatus(null);
     }
   };
 
@@ -133,21 +147,11 @@ export default function MapValidator() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; OpenStreetMap contributors'
           />
-
           <ClickHandler onMapClick={onMapClick} />
-
-          {marker && (
-            <Marker position={[marker.lat, marker.lng]}>
-              <Popup>Selected location</Popup>
-            </Marker>
-          )}
-
-          {vertices.length > 0 && (
-            <Polygon positions={vertices} />
-          )}
+          {marker && <Marker position={[marker.lat, marker.lng]}><Popup>Selected location</Popup></Marker>}
+          {vertices.length > 0 && <Polygon positions={vertices} />}
         </MapContainer>
 
-        {/* Search box (top-left) */}
         <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 1000, background: 'white', padding: 8, borderRadius: 6 }}>
           <input
             placeholder="Search place (city, address, etc)"
@@ -195,6 +199,23 @@ export default function MapValidator() {
             <div>Max Building Height: {result.max_building_height_m} m</div>
             <div>Max Floors: {result.max_floors}</div>
             <div>Permissible Footprint: {result.permissible_footprint_sqm} sqm</div>
+
+            <div style={{ marginTop: 10 }}>
+              <label>Current Floors: </label>
+              <input
+                type="number"
+                value={currentFloors}
+                onChange={(e) => setCurrentFloors(e.target.value)}
+                style={{ width: 80, marginLeft: 6, marginRight: 6 }}
+              />
+              <button onClick={checkFloorStatus}>Check Legality</button>
+            </div>
+
+            {floorStatus && (
+              <div style={{ marginTop: 6, fontWeight: 'bold', color: floorStatus.includes('Illegal') ? 'red' : 'green' }}>
+                {floorStatus}
+              </div>
+            )}
           </div>
         )}
       </div>

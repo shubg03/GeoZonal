@@ -10154,5 +10154,157 @@
       "max_floors": 2,
       "permissible_footprint_sqm": "9054.21"
     }
+  },
+  {
+    "timestamp": "2025-10-03T03:09:19.979Z",
+    "input": {
+      "plot": {
+        "area": 14454.809854887051
+      },
+      "road": {
+        "width": 20
+      }
+    },
+    "output": {
+      "permissible_fsi": 2,
+      "plot_area_sqm": "14454.81",
+      "max_builtup_area_sqm": "28909.62",
+      "max_building_height_m": "30.00",
+      "max_floors": 10,
+      "permissible_footprint_sqm": "9395.63"
+    }
+  },
+  {
+    "timestamp": "2025-10-03T04:17:23.438Z",
+    "input": {
+      "plot": {
+        "area": 9271.709321666052
+      },
+      "road": {
+        "width": 8
+      }
+    },
+    "output": {
+      "permissible_fsi": 1.1,
+      "plot_area_sqm": "9271.71",
+      "max_builtup_area_sqm": "10198.88",
+      "max_building_height_m": "12.00",
+      "max_floors": 4,
+      "permissible_footprint_sqm": "6026.61"
+    }
+  },
+  {
+    "timestamp": "2025-10-03T04:20:00.025Z",
+    "input": {
+      "plot": {
+        "area": 979.3478192199666
+      },
+      "road": {
+        "width": 10
+      }
+    },
+    "output": {
+      "permissible_fsi": 1.3,
+      "plot_area_sqm": "979.35",
+      "max_builtup_area_sqm": "1273.15",
+      "max_building_height_m": "15.00",
+      "max_floors": 5,
+      "permissible_footprint_sqm": "636.58"
+    }
+  },
+  {
+    "timestamp": "2025-10-03T05:13:33.068Z",
+    "input": {
+      "plot": {
+        "area": 7987.464782083591
+      },
+      "road": {
+        "width": 10
+      }
+    },
+    "output": {
+      "permissible_fsi": 1.3,
+      "plot_area_sqm": "7987.46",
+      "max_builtup_area_sqm": "10383.70",
+      "max_building_height_m": "15.00",
+      "max_floors": 5,
+      "permissible_footprint_sqm": "5191.85"
+    }
+  },
+  {
+    "timestamp": "2025-10-03T05:33:53.385Z",
+    "input": {
+      "plot": {
+        "area": 1966.9213338562079
+      },
+      "road": {
+        "width": 12
+      }
+    },
+    "output": {
+      "permissible_fsi": 1.3,
+      "plot_area_sqm": "1966.92",
+      "max_builtup_area_sqm": "2557.00",
+      "max_building_height_m": "18.00",
+      "max_floors": 6,
+      "permissible_footprint_sqm": "1278.50"
+    }
+  },
+  {
+    "timestamp": "2025-10-03T05:39:05.980Z",
+    "input": {
+      "plot": {
+        "area": 2028.36829599814
+      },
+      "road": {
+        "width": 10
+      }
+    },
+    "output": {
+      "permissible_fsi": 1.3,
+      "plot_area_sqm": "2028.37",
+      "max_builtup_area_sqm": "2636.88",
+      "max_building_height_m": "15.00",
+      "max_floors": 5,
+      "permissible_footprint_sqm": "1318.44"
+    }
+  },
+  {
+    "timestamp": "2025-10-03T05:42:05.253Z",
+    "input": {
+      "plot": {
+        "area": 1944.6925401581905
+      },
+      "road": {
+        "width": 10
+      }
+    },
+    "output": {
+      "permissible_fsi": 1.3,
+      "plot_area_sqm": "1944.69",
+      "max_builtup_area_sqm": "2528.10",
+      "max_building_height_m": "15.00",
+      "max_floors": 5,
+      "permissible_footprint_sqm": "1264.05"
+    }
+  },
+  {
+    "timestamp": "2025-10-03T06:14:17.900Z",
+    "input": {
+      "plot": {
+        "area": 8325.250434861151
+      },
+      "road": {
+        "width": 8
+      }
+    },
+    "output": {
+      "permissible_fsi": 1.1,
+      "plot_area_sqm": "8325.25",
+      "max_builtup_area_sqm": "9157.78",
+      "max_building_height_m": "12.00",
+      "max_floors": 4,
+      "permissible_footprint_sqm": "5411.41"
+    }
   }
 ]

@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const { calculatePermissibleBuilding } = require('./middleware/check-permit');
+const { registerUser, loginUser, getAllUsers } = require('./middleware/auth');
 
 const app = express();
 const PORT = 9000;
@@ -85,6 +86,44 @@ app.post('/submit', (req, res) => {
   }
 });
 
+// Authentication Routes
+app.post('/auth/register', (req, res) => {
+  const { fullName, email, password } = req.body;
+
+  if (!fullName || !email || !password) {
+    return res.status(400).json({ success: false, message: 'All fields are required' });
+  }
+
+  const result = registerUser({ fullName, email, password });
+
+  if (result.success) {
+    res.status(201).json(result);
+  } else {
+    res.status(400).json(result);
+  }
+});
+
+app.post('/auth/login', (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ success: false, message: 'Email and password are required' });
+  }
+
+  const result = loginUser(email, password);
+
+  if (result.success) {
+    res.status(200).json(result);
+  } else {
+    res.status(401).json(result);
+  }
+});
+
+// Get all users (for testing - remove in production)
+app.get('/auth/users', (req, res) => {
+  res.status(200).json({ users: getAllUsers() });
+});
+
 // Optional test route
 app.get('/test', (req, res) => {
   res.send("Server is working on port 9000!");
@@ -93,4 +132,5 @@ app.get('/test', (req, res) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`📝 Auth endpoints: POST /auth/register, POST /auth/login`);
 });

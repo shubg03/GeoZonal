@@ -1,0 +1,164 @@
+/* How It Works Page Styles */
+.how-it-works-page {
+  min-height: 100vh;
+  padding-top: 72px;
+  background: white;
+}
+
+.how-it-works-hero {
+  background: linear-gradient(135deg, var(--secondary-600), var(--secondary-800));
+  padding: 4rem 2rem;
+  text-align: center;
+  color: white;
+}
+
+.how-it-works-hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0 0 1rem 0;
+}
+
+.how-it-works-hero p {
+  font-size: 1.25rem;
+  opacity: 0.95;
+  margin: 0;
+}
+
+.how-it-works-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.step-card {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  padding: 2rem;
+  background: var(--gray-50);
+  border-radius: var(--radius-lg);
+  border-left: 4px solid var(--primary-600);
+  transition: all var(--transition-base);
+}
+
+.step-card:hover {
+  transform: translateX(8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.step-number {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-600);
+  color: white;
+  font-size: 1.75rem;
+  font-weight: 700;
+  border-radius: 50%;
+}
+
+.step-card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin: 0 0 0.75rem 0;
+}
+
+.step-card p {
+  font-size: 1rem;
+  color: var(--gray-600);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.regulations-info {
+  max-width: 900px;
+  margin: 2rem auto 4rem;
+  padding: 0 2rem;
+}
+
+.regulations-info h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin: 0 0 2rem 0;
+  text-align: center;
+}
+
+.regulation-table {
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-md);
+}
+
+.regulation-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid var(--gray-200);
+  font-size: 1rem;
+}
+
+.regulation-row:last-child {
+  border-bottom: none;
+}
+
+.regulation-header {
+  background: var(--primary-600);
+  color: white;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.regulation-row div {
+  text-align: center;
+}
+
+.regulation-note {
+  margin-top: 1rem;
+  font-size: 0.9375rem;
+  color: var(--gray-600);
+  font-style: italic;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .how-it-works-hero h1 {
+    font-size: 2rem;
+  }
+
+  .how-it-works-content {
+    padding: 2rem 1rem;
+  }
+
+  .step-card {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .regulation-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    text-align: left;
+  }
+
+  .regulation-row div::before {
+    content: attr(data-label);
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+
+  .regulation-header div::before {
+    content: '';
+    margin: 0;
+  }
+}
